@@ -23,16 +23,5 @@ public class RegistrationController {
         																	  registration.getPassword());
         return ResponseEntity.ok(savedRegistration);
     }
+    
 }
-//private Long id;
-//private String firstName;
-//private String lastName;
-//private String email;
-//private String mobile;
-//private String gender;
-//private String dateOfBirth;
-//private String address;
-//private String city;
-//private String areaPIN;
-//private String state;
-////private String password;
