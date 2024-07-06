@@ -27,6 +27,8 @@ public class Registration {
 	private String areaPIN;
 	private String state;
 	private String password;
+	private String confirmPassword;
+	
 	public Long getId() {
 		return id;
 	}
@@ -99,7 +101,12 @@ public class Registration {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
 	
-	
-	
+		
 }

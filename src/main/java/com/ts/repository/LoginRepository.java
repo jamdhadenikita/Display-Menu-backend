@@ -7,5 +7,6 @@ import com.ts.model.Login;
 
 @Repository
 public interface LoginRepository extends JpaRepository<Login, Long> {
-    Login findByUserName(String userName);
+	
+    public Login findByUserName(String userName);
 }

@@ -18,6 +18,7 @@ public class Login {
 	private Long id;
     private String userName;
     private String password;
+    
 	public Long getId() {
 		return id;
 	}
