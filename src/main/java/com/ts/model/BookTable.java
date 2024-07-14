@@ -1,5 +1,8 @@
 package com.ts.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,12 +13,15 @@ public class BookTable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
 	private Long id;
+	
     private String name;
     private String email;
-    private String date_time;
+    private LocalDateTime date_time;
     private String numbe_of_people;
     private String special_request;
+    
 	public Long getId() {
 		return id;
 	}
@@ -34,10 +40,10 @@ public class BookTable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getDate_time() {
+	public LocalDateTime getDate_time() {
 		return date_time;
 	}
-	public void setDate_time(String date_time) {
+	public void setDate_time(LocalDateTime date_time) {
 		this.date_time = date_time;
 	}
 	public String getNumbe_of_people() {
@@ -54,7 +60,7 @@ public class BookTable {
 	}
 	
 	public BookTable() {}
-	public BookTable(Long id, String name, String email, String date_time, String numbe_of_people,
+	public BookTable(Long id, String name, String email, LocalDateTime date_time, String numbe_of_people,
 			String special_request) {
 
 		this.id = id;

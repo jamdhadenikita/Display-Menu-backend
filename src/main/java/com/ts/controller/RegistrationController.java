@@ -6,9 +6,9 @@ import com.ts.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+@CrossOrigin("*")
 @RestController
-//@RequestMapping("/api/registrations")
+@RequestMapping("/api/registrations")
 public class RegistrationController {
 
     @Autowired

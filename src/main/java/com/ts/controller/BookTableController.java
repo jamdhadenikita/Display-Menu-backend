@@ -11,6 +11,7 @@ import com.ts.service.BookTableService;
 
 @CrossOrigin("*")
 @RestController
+@RequestMapping("/api/bookTable")
 public class BookTableController {
 
     @Autowired
@@ -42,27 +43,35 @@ public class BookTableController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<BookTable> createBooking(@RequestBody BookTable bookTable) {
-        BookTable savedBooking = bookTableService.saveBooking(bookTable);
-        return new ResponseEntity<>(savedBooking, HttpStatus.CREATED);
-    }
+    @PostMapping("/book")
+    public ResponseEntity<BookTable> updateBooking(@RequestBody BookTable bookingDetails) {
+        if (bookingDetails != null) {
+        	
+            BookTable updatedBooking = bookTableService.saveBooking(bookingDetails.getName(),
+            		bookingDetails.getEmail(),bookingDetails.getDate_time().toString(),bookingDetails.getNumbe_of_people(),
+            		bookingDetails.getSpecial_request());
 
-    @PutMapping("/{id}")
-    public ResponseEntity<BookTable> updateBooking(@PathVariable Long id, @RequestBody BookTable bookingDetails) {
-        BookTable existingBooking = bookTableService.getBookingById(id);
-        if (existingBooking != null) {
-            existingBooking.setName(bookingDetails.getName());
-            existingBooking.setEmail(bookingDetails.getEmail());
-            existingBooking.setDate_time(bookingDetails.getDate_time());
-            existingBooking.setNumbe_of_people(bookingDetails.getNumbe_of_people());
-            existingBooking.setSpecial_request(bookingDetails.getSpecial_request());
-            BookTable updatedBooking = bookTableService.saveBooking(existingBooking);
+            // Send booking confirmation email
+            try {
+                bookTableService.sendBookingEmail(
+                    bookingDetails.getEmail(),
+                    "From Annapurna Mess",
+                    bookingDetails.getName(),
+                    bookingDetails.getDate_time().toString(),
+                    bookingDetails.getNumbe_of_people(),
+                    bookingDetails.getSpecial_request()
+                );
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
             return new ResponseEntity<>(updatedBooking, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBooking(@PathVariable Long id) {

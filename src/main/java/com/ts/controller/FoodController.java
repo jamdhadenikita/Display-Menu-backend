@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")                                                  // Adjust according to your frontend URL
+@RequestMapping("/api/addfood")
 public class FoodController {
     @Autowired
     private FoodService foodService;

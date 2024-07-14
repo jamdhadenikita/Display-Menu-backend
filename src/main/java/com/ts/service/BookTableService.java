@@ -1,14 +1,20 @@
 package com.ts.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.ts.model.BookTable;
 import com.ts.repository.BookTableRepository;
+
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 
 @Service
 public class BookTableService {
@@ -18,6 +24,44 @@ public class BookTableService {
 
     @Autowired
     private JavaMailSender mailSender;
+    
+    
+    //----mail sender api ---//
+    
+    
+    public void sendBookingEmail(String to, String subject, String name, String date_time,String numbe_of_people,String special_request) throws MessagingException {
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+        
+        helper.setTo(to);
+        helper.setSubject(subject);
+        String content = "<p>Dear " + name + ",</p>" +
+                         "<p>Your table booking is confirmed for " + date_time + ".</p>" +
+                         "<p>Number of people: " + numbe_of_people + "</p>" +
+                         "<p>Special request: " + special_request + "</p>" +
+                         "<p>Thank you!</p>";
+        helper.setText(content, true);
+        
+        mailSender.send(mimeMessage);
+    }
+    
+    
+//    public void sendBookingEmail(String to, String subject, String name,String numbe_of_people , String dateTime,String special_request) {
+//       
+//    	SimpleMailMessage message = new SimpleMailMessage();
+//       
+//    	
+//    	message.setTo(to);
+//        message.setSubject( "From annapurna mess");
+//        message.setText("Dear " + name + ",\n\nYour table booking is confirmed for " + dateTime +
+//                        ".\n\nNumber of people: " + numbe_of_people +
+//                        "\nSpecial request: " + special_request + "\n\nThank you!");
+//        mailSender.send(message);
+//    }
+//    
+
+    
+    
 
     public List<BookTable> getAllBookings() {
         return bookTableRepository.findAll();
@@ -30,25 +74,30 @@ public class BookTableService {
     public List<BookTable> getBookingsByName(String name) {
         return bookTableRepository.findByName(name);
     }
+    
+    
 
-    public BookTable saveBooking(BookTable bookTable) {
-        BookTable savedBooking = bookTableRepository.save(bookTable);
-        sendBookingEmail(savedBooking);
-        return savedBooking;
-    }
 
     public void deleteBooking(Long id) {
         bookTableRepository.deleteById(id);
     }
+    
+    
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+    
+	public BookTable saveBooking(String name, String email, String date_time, String numbe_of_people, String special_request) {
+		
+		 BookTable savedBooking = new BookTable();
+		 
+		 savedBooking.setName(name);
+		 savedBooking.setEmail(email);
+		 savedBooking.setNumbe_of_people(numbe_of_people);
+		 savedBooking.setDate_time(LocalDateTime.parse(date_time, DATE_TIME_FORMATTER));
+	
+		 savedBooking.setSpecial_request(special_request);
+		 
+		 
+	    return bookTableRepository.save(savedBooking);
+	}
 
-    private void sendBookingEmail(BookTable bookTable) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(bookTable.getEmail());
-        message.setSubject("Table Booking Confirmation");
-        message.setText("Dear " + bookTable.getName() + ",\n\nYour table booking is confirmed for " + bookTable.getDate_time() +
-                        ".\n\nNumber of people: " + bookTable.getNumbe_of_people() +
-                        "\nSpecial request: " + bookTable.getSpecial_request() + "\n\nThank you!");
-
-        mailSender.send(message);
-    }
 }
