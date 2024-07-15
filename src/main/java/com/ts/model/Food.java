@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -19,44 +20,64 @@ public class Food {
 
     private String title;
     private String description;
-    private String price;
+    private double price;
     
-    @Column(columnDefinition = "Longtext")
-    private String image;
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private byte [] image;
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	public String getImageUrl() {
-		return image;
-	}
-	public void setImageUrl(String imageUrl) {
-		this.image = imageUrl;
-	}
-	
-	public void setPrice(String price) {
-		this.price = price;
-		
-	}
-	
-	public String getPrice() {
+
+	public double getPrice() {
 		return price;
 	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+	
+	public Food() {}
+
+	public Food(Long id, String title, String description, double price, byte[] image) {
+		
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.price = price;
+		this.image = image;
+	}
+	
+    
     
     
 

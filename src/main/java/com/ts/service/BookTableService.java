@@ -44,25 +44,7 @@ public class BookTableService {
         
         mailSender.send(mimeMessage);
     }
-    
-    
-//    public void sendBookingEmail(String to, String subject, String name,String numbe_of_people , String dateTime,String special_request) {
-//       
-//    	SimpleMailMessage message = new SimpleMailMessage();
-//       
-//    	
-//    	message.setTo(to);
-//        message.setSubject( "From annapurna mess");
-//        message.setText("Dear " + name + ",\n\nYour table booking is confirmed for " + dateTime +
-//                        ".\n\nNumber of people: " + numbe_of_people +
-//                        "\nSpecial request: " + special_request + "\n\nThank you!");
-//        mailSender.send(message);
-//    }
-//    
-
-    
-    
-
+   
     public List<BookTable> getAllBookings() {
         return bookTableRepository.findAll();
     }
@@ -74,10 +56,7 @@ public class BookTableService {
     public List<BookTable> getBookingsByName(String name) {
         return bookTableRepository.findByName(name);
     }
-    
-    
-
-
+   
     public void deleteBooking(Long id) {
         bookTableRepository.deleteById(id);
     }
@@ -99,5 +78,9 @@ public class BookTableService {
 		 
 	    return bookTableRepository.save(savedBooking);
 	}
+	
+	public void deleteAllBookings() {
+        bookTableRepository.deleteAll();
+    }
 
 }

@@ -50,4 +50,9 @@ public class RegistrationService {
 		
 		return registrationRepository.save(registration);
 	}
+	
+	
+	 public void deleteAllRegistrations() {
+	        registrationRepository.deleteAll();
+	    }
 }

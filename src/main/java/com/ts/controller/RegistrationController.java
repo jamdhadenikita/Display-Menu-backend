@@ -24,4 +24,11 @@ public class RegistrationController {
         return ResponseEntity.ok(savedRegistration);
     }
     
+    
+    @DeleteMapping("/deleteAll")
+    public ResponseEntity<Void> deleteAllRegistrations() {
+        registrationService.deleteAllRegistrations();
+        return ResponseEntity.noContent().build();
+    }
+    
 }

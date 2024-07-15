@@ -17,11 +17,13 @@ public class BookTableController {
     @Autowired
     private BookTableService bookTableService;
 
+    
    @GetMapping("get_all_booking")
     public ResponseEntity<List<BookTable>> getAllBookings() {
         List<BookTable> bookings = bookTableService.getAllBookings();
         return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
+   
 
     @GetMapping("/{id}")
     public ResponseEntity<BookTable> getBookingById(@PathVariable Long id) {
@@ -33,6 +35,7 @@ public class BookTableController {
         }
     }
 
+    
     @GetMapping("/searchByName")
     public ResponseEntity<List<BookTable>> getBookingsByName(@RequestParam String name) {
         List<BookTable> bookings = bookTableService.getBookingsByName(name);
@@ -43,6 +46,7 @@ public class BookTableController {
         }
     }
 
+    
     @PostMapping("/book")
     public ResponseEntity<BookTable> updateBooking(@RequestBody BookTable bookingDetails) {
         if (bookingDetails != null) {
@@ -72,10 +76,13 @@ public class BookTableController {
         }
     }
     
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBooking(@PathVariable Long id) {
-        bookTableService.deleteBooking(id);
+    
+    @DeleteMapping("/delete-all")
+    public ResponseEntity<Void> deleteAllBookings() {
+        bookTableService.deleteAllBookings();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-}
+   }
+    
+    
+
