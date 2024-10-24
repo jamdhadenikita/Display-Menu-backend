@@ -1,11 +1,15 @@
 package com.ts.service;
 
 import com.ts.model.Registration;
+//import com.ts.repository.LoginRepository;
 import com.ts.repository.RegistrationRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,27 +17,39 @@ import java.util.Optional;
 public class RegistrationService {
     @Autowired
     private RegistrationRepository registrationRepository;
+    
+//    @Autowired
+//    private LoginRepository loginRepository;
 
-    public List<Registration> getAllRegistrations() {
-        return registrationRepository.findAll();
-    }
-
+   
     public Optional<Registration> getRegistrationById(Long id) {
         return registrationRepository.findById(id);
     }
-
-//    public Registration saveRegistration(Registration registration) {
-//    	
-//        return registrationRepository.save(registration);
-//    }
+    
 
     public void deleteRegistration(Long id) {
         registrationRepository.deleteById(id);
     }
+    
 
-	public Registration saveRegistration(String firstName, String lastName, String email, String mobile, String gender,
+//	public ResponseEntity<?>  saveRegistration(Registration registration) {
+//		
+//		Registration user = registrationRepository.findByEmail(registration.getEmail());
+//		
+//		String emailCheck = user.getEmail();
+//		
+//		if(!registration.getEmail().equals(emailCheck)) {
+//			
+//			return new ResponseEntity<>(registrationRepository.save(registration), HttpStatus.CREATED);
+//			
+//		}else {
+//			return new ResponseEntity<>("internal server error", HttpStatus.BAD_REQUEST);		
+//		}
+//	}
+    
+    public Registration saveRegistration(String firstName, String lastName, String email, String mobile, String gender,
 			String dateOfBirth, String address, String city, String areaPIN, String state, String password) {
-		// TODO Auto-generated method stub
+		
 		Registration registration = new  Registration();
 		
 		registration.setFirstName(firstName);
@@ -51,8 +67,40 @@ public class RegistrationService {
 		return registrationRepository.save(registration);
 	}
 	
+      
+	public List<Registration> getAllRegistrations() {
+        return registrationRepository.findAll();
+    }
 	
+	
+	public boolean deleteRegistrationById(Long id) {
+	    Optional<Registration> registration = registrationRepository.findById(id);
+	    if (registration.isPresent()) {
+	        registrationRepository.deleteById(id);
+	        return true;
+	    } else {
+	        return false;
+	    }
+	}
+	
+	
+	// Method to register a new user (already discussed)
+    public Registration registerUser(Registration registration) {
+        LocalDateTime now = LocalDateTime.now();
+        registration.setRegistrationDateTime(now);
+        return registrationRepository.save(registration);
+    }
+    
+
+    // Method to get registrations grouped by month
+//    public List<Object[]> getRegistrationsGroupedByMonth() {
+//        return registrationRepository.findRegistrationsGroupedByMonth();
+//    }
+    
+    
 	 public void deleteAllRegistrations() {
 	        registrationRepository.deleteAll();
 	    }
+	 
+	 
 }

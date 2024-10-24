@@ -1,13 +1,13 @@
 package com.ts.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-
-
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,6 +28,8 @@ public class Registration {
 	private String state;
 	private String password;
 	private String confirmPassword;
+		
+	 private LocalDateTime registrationDateTime;
 	
 	public Long getId() {
 		return id;
@@ -108,5 +110,13 @@ public class Registration {
 		this.confirmPassword = confirmPassword;
 	}
 	
+	 public LocalDateTime getRegistrationDateTime() {
+	        return registrationDateTime;
+	    }
+	
+	 // Method to set the registration date and time
+    public void setRegistrationDateTime(LocalDateTime registrationDateTime) {
+        this.registrationDateTime = registrationDateTime;
+    }
 		
 }
