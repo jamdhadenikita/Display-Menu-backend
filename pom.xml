@@ -112,7 +112,12 @@
 		</dependency>
 
 
-   	</dependencies>
+		<dependency>
+			<groupId>com.template</groupId>
+			<artifactId>template-app</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
       <build>
 		<plugins>
 			<plugin>

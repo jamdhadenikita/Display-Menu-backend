@@ -29,11 +29,14 @@ public class FoodService {
         food.setTitle(title);
         food.setDescription(description);
         food.setPrice(price);
+        
+        
         food.setImage(image); // Assuming you have an image field in Food entity
         return foodRepository.save(food);
     }
 	
 	public List<Food> getAllFood(){
+		
 		return foodRepository.findAll();
 	}
 

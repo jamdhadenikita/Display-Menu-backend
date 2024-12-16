@@ -24,7 +24,6 @@ public class BookTableController {
         return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
    
-
     @GetMapping("/{id}")
     public ResponseEntity<BookTable> getBookingById(@PathVariable Long id) {
         BookTable booking = bookTableService.getBookingById(id);
